@@ -475,13 +475,14 @@ class DbSubscriberRepo implements SubscriberRepo {
 	{
 		try
 		{
-			//starting a transition
-			$this->db->beginTransaction();
 
 			$plan = $this->planRepo->getPlanByIdentifier($planIdentifier);
 
 			//if user is already in that plan !! then return
 			if($plan['id'] == $oldPlanId) return;
+
+			//starting a transition
+			$this->db->beginTransaction();
 
 			//switching user to respect plan.
 			$this->db->table(Config::get('throttle::tables.subscriptions'))
